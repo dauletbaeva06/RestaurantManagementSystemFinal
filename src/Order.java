@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 class Order {
     private int orderId;
@@ -43,12 +42,11 @@ class Order {
         this.status = status;
     }
 
-    // Add an item to the order
+    // Add or remove items
     public void addItem(MenuItem item) {
         items.add(item);
     }
 
-    // Remove an item from the order
     public void removeItem(String itemName) {
         items.removeIf(item -> item.getName().equalsIgnoreCase(itemName));
     }
@@ -58,9 +56,23 @@ class Order {
         return items.stream().mapToDouble(MenuItem::getPrice).sum();
     }
 
+    // Overridden methods
     @Override
     public String toString() {
         String itemsStr = items.stream().map(MenuItem::getName).collect(Collectors.joining(", "));
         return String.format("Order ID: %d, Customer: %s, Items: [%s], Status: %s", orderId, customerName, itemsStr, status);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Order order = (Order) obj;
+        return orderId == order.orderId && Objects.equals(customerName, order.customerName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderId, customerName);
     }
 }
