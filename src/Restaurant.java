@@ -1,18 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
-
-public class Restaurant {
-    private String name;
+import java.util.stream.Collectors;
+class Restaurant extends BaseEntity {
     private List<MenuItem> menu;
     private List<Order> orders;
 
     public Restaurant(String name) {
-        this.name = name;
+        super(name);
         this.menu = new ArrayList<>();
         this.orders = new ArrayList<>();
-    }
-    public String getName() {
-        return name;
     }
 
     public List<MenuItem> getMenu() {
@@ -23,19 +19,15 @@ public class Restaurant {
         return orders;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void addMenuItem(MenuItem item) {
         menu.add(item);
     }
 
-    public void addOrder(Order order) {
-        orders.add(order);
+    public void removeMenuItem(String itemName) {
+        menu.removeIf(item -> item.getName().equalsIgnoreCase(itemName));
     }
 
-    public String toString() {
-        return String.format("Restaurant: %s, Menu Items: %d, Orders: %d", name, menu.size(), orders.size());
+    public void addOrder(Order order) {
+        orders.add(order);
     }
 }
