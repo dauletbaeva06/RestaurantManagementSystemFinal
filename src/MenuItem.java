@@ -8,7 +8,7 @@ class MenuItem extends BaseEntity {
         this.category = category;
     }
 
-    // Getter and Setter for price
+    // Getters and Setters
     public double getPrice() {
         return price;
     }
@@ -17,7 +17,6 @@ class MenuItem extends BaseEntity {
         this.price = price;
     }
 
-    // Getter and Setter for category
     public String getCategory() {
         return category;
     }
@@ -26,6 +25,7 @@ class MenuItem extends BaseEntity {
         this.category = category;
     }
 
+    // Overridden methods
     @Override
     public String toString() {
         return String.format("MenuItem: %s, Price: %.2f, Category: %s", getName(), price, category);
