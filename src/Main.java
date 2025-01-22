@@ -6,7 +6,6 @@ public class Main {
         Restaurant restaurant = new Restaurant("La Dolce Vita");
         Scanner scanner = new Scanner(System.in);
 
-        // Sample data
         restaurant.addMenuItem(new MenuItem("Cream Pasta", 4590, "Main Course"));
         restaurant.addMenuItem(new MenuItem("Caviar Bisque", 4990, "Appetizer"));
         restaurant.addMenuItem(new MenuItem("Chocolate Soufflé", 3290, "Dessert"));
