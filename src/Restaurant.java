@@ -1,56 +1,42 @@
-import java.util.*;
-import java.util.stream.Collectors;
-class Restaurant extends BaseEntity {
-    private List<MenuItem> menu;
-    private List<Order> orders;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Restaurant(String name) {
-        super(name);
-        this.menu = new ArrayList<>();
+public class Restaurant {
+    private List<MenuItem> menuItems;
+    private List<Order> orders; // Список заказов
+
+    public Restaurant() {
+        this.menuItems = new ArrayList<>();
         this.orders = new ArrayList<>();
-    }
-
-    public List<MenuItem> getMenu() {
-        return menu;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void addMenuItem(MenuItem item) {
-        menu.add(item);
-    }
-
-    public void removeMenuItem(String itemName) {
-        menu.removeIf(item -> item.getName().equalsIgnoreCase(itemName));
     }
 
     public void addOrder(Order order) {
         orders.add(order);
+        System.out.println("Order added to restaurant orders.");
     }
 
-    public List<MenuItem> filterMenuByCategory(String category) {
-        return menu.stream()
-                .filter(item -> item.getCategory().equalsIgnoreCase(category))
-                .collect(Collectors.toList());
-    }
-
+    // Метод поиска блюда в меню по названию
     public MenuItem searchMenuItem(String name) {
-        return menu.stream()
-                .filter(item -> item.getName().equalsIgnoreCase(name))
-                .findFirst()
-                .orElse(null);
+        for (MenuItem item : menuItems) {
+            if (item.getName().equalsIgnoreCase(name)) {
+                return item;
+            }
+        }
+        return null; // Если не найдено
     }
 
-    public List<MenuItem> sortMenuByPrice(boolean ascending) {
-        return menu.stream()
-                .sorted((a, b) -> ascending ? Double.compare(a.getPrice(), b.getPrice()) : Double.compare(b.getPrice(), a.getPrice()))
-                .collect(Collectors.toList());
+    public void addMenuItem(MenuItem item) {
+        menuItems.add(item);
     }
 
-    @Override
-    public String toString() {
-        return String.format("Restaurant: %s, Menu Items: %d, Orders: %d", getName(), menu.size(), orders.size());
+    public void printOrders() {
+        if (orders.isEmpty()) {
+            System.out.println("No orders yet.");
+            return;
+        }
+        System.out.println("Current Orders:");
+        for (Order order : orders) {
+            System.out.println(order);
+        }
     }
 }

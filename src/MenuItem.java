@@ -1,33 +1,23 @@
-class MenuItem extends BaseEntity {
+public class MenuItem {
+    private int id;
+    private String name;
     private double price;
     private String category;
 
-    public MenuItem(String name, double price, String category) {
-        super(name);
+    public MenuItem(int id, String name, double price, String category) {
+        this.id = id;
+        this.name = name;
         this.price = price;
         this.category = category;
     }
 
-    // Getters and Setters
-    public double getPrice() {
-        return price;
-    }
+    public int getId() { return id; }
+    public String getName() { return name; }
+    public double getPrice() { return price; }
+    public String getCategory() { return category; }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    // Overridden methods
     @Override
     public String toString() {
-        return String.format("MenuItem: %s, Price: %.2f, Category: %s", getName(), price, category);
+        return String.format("MenuItem{id=%d, name='%s', price=%.2f, category='%s'}", id, name, price, category);
     }
 }

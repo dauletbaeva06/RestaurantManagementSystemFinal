@@ -1,78 +1,29 @@
-import java.util.*;
-import java.util.stream.Collectors;
-class Order {
-    private int orderId;
+import java.util.List;
+
+public class Order {
+    private int id;
     private String customerName;
-    private List<MenuItem> items;
     private String status;
+    private double totalPrice;
+    private List<MenuItem> items;
 
-    public Order(int orderId, String customerName) {
-        this.orderId = orderId;
+    public Order(int id, String customerName, String status, double totalPrice, List<MenuItem> items) {
+        this.id = id;
         this.customerName = customerName;
-        this.items = new ArrayList<>();
-        this.status = "Pending"; // Default status
-    }
-
-    // Getters and Setters
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public List<MenuItem> getItems() {
-        return items;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
         this.status = status;
+        this.totalPrice = totalPrice;
+        this.items = items;
     }
 
-    // Add or remove items
-    public void addItem(MenuItem item) {
-        items.add(item);
-    }
+    public int getId() { return id; }
+    public String getCustomerName() { return customerName; }
+    public String getStatus() { return status; }
+    public double getTotalPrice() { return totalPrice; }
+    public List<MenuItem> getItems() { return items; }
 
-    public void removeItem(String itemName) {
-        items.removeIf(item -> item.getName().equalsIgnoreCase(itemName));
-    }
-
-    // Calculate total price
-    public double calculateTotal() {
-        return items.stream().mapToDouble(MenuItem::getPrice).sum();
-    }
-
-    // Overridden methods
     @Override
     public String toString() {
-        String itemsStr = items.stream().map(MenuItem::getName).collect(Collectors.joining(", "));
-        return String.format("Order ID: %d, Customer: %s, Items: [%s], Status: %s", orderId, customerName, itemsStr, status);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Order order = (Order) obj;
-        return orderId == order.orderId && Objects.equals(customerName, order.customerName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(orderId, customerName);
+        return String.format("Order{id=%d, customer='%s', status='%s', totalPrice=%.2f, items=%s}",
+                id, customerName, status, totalPrice, items);
     }
 }

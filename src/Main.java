@@ -1,93 +1,93 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    private static Restaurant restaurant = new Restaurant();
+
     public static void main(String[] args) {
-        Restaurant restaurant = new Restaurant("La Dolce Vita");
+        MenuItemRepository menuRepo = new MenuItemRepository();
+        OrderRepository orderRepo = new OrderRepository();
         Scanner scanner = new Scanner(System.in);
 
-        restaurant.addMenuItem(new MenuItem("Cream Pasta", 4590, "Main Course"));
-        restaurant.addMenuItem(new MenuItem("Caviar Bisque", 4990, "Appetizer"));
-        restaurant.addMenuItem(new MenuItem("Chocolate Soufflé", 3290, "Dessert"));
-        restaurant.addMenuItem(new MenuItem("Lobster Risotto", 5690, "Main Course"));
-        restaurant.addMenuItem(new MenuItem("Carpaccio", 3490, "Appetizer"));
-        restaurant.addMenuItem(new MenuItem("Opera Cake", 3890, "Dessert"));
-
-        // User interaction loop
         while (true) {
-            System.out.println("\nWelcome to " + restaurant.getName() + " Management System");
-            System.out.println("1. View Menu");
-            System.out.println("2. Filter Menu by Category");
-            System.out.println("3. Search Menu Item");
-            System.out.println("4. Sort Menu by Price");
-            System.out.println("5. Place an Order");
-            System.out.println("6. View Orders");
-            System.out.println("7. Exit");
+            System.out.println("\n1. View Menu\n2. Add Menu Item\n3. Place Order\n4. Exit\n5. Order Specific Item\n6. View Orders");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    System.out.println("MENU:");
-                    restaurant.getMenu().forEach(System.out::println);
+                    List<MenuItem> menu = menuRepo.getAllMenuItems();
+                    menu.forEach(System.out::println);
                     break;
 
                 case 2:
-                    System.out.print("Enter category to filter: ");
+                    System.out.print("Enter item name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter price: ");
+                    double price = scanner.nextDouble();
+                    scanner.nextLine();
+                    System.out.print("Enter category: ");
                     String category = scanner.nextLine();
-                    List<MenuItem> filteredMenu = restaurant.filterMenuByCategory(category);
-                    System.out.println("Filtered Menu:");
-                    filteredMenu.forEach(System.out::println);
+
+                    menuRepo.addMenuItem(new MenuItem(0, name, price, category)); // ✅ Добавили id
+                    System.out.println("Item added successfully!");
                     break;
 
+
                 case 3:
-                    System.out.print("Enter item name to search: ");
-                    String itemName = scanner.nextLine();
-                    MenuItem menuItem = restaurant.searchMenuItem(itemName);
-                    System.out.println(menuItem != null ? menuItem : "Item not found!");
+                    System.out.print("Enter customer name: ");
+                    String customer = scanner.nextLine();
+
+                    List<MenuItem> allItems = menuRepo.getAllMenuItems();
+                    orderRepo.addOrder(new Order(0, customer, "Pending", 0, allItems));
+                    System.out.println("Order placed successfully!");
                     break;
 
                 case 4:
-                    System.out.print("Sort by price (true = ascending, false = descending): ");
-                    boolean ascending = scanner.nextBoolean();
-                    List<MenuItem> sortedMenu = restaurant.sortMenuByPrice(ascending);
-                    System.out.println("Sorted Menu:");
-                    sortedMenu.forEach(System.out::println);
+                    System.exit(0);
                     break;
 
                 case 5:
+                    System.out.print("Enter item name to order: ");
+                    String orderItem = scanner.nextLine();
+
+                    MenuItem item = restaurant.searchMenuItem(orderItem);
+                    if (item == null) {
+                        System.out.println("Item not found!");
+                        break;
+                    }
+
                     System.out.print("Enter customer name: ");
                     String customerName = scanner.nextLine();
-                    Order order = new Order(restaurant.getOrders().size() + 1, customerName);
-                    while (true) {
-                        System.out.print("Enter item name to add to order (or 'done' to finish): ");
-                        String name = scanner.nextLine();
-                        if (name.equalsIgnoreCase("done")) break;
-                        MenuItem item = restaurant.searchMenuItem(name);
-                        if (item != null) {
-                            order.addItem(item);
-                            System.out.println("Item added to order!");
-                        } else {
-                            System.out.println("Item not found in the menu.");
-                        }
-                    }
+
+                    int orderId = (int) (System.currentTimeMillis() / 1000);
+
+                    List<MenuItem> singleItemOrder = new ArrayList<>();
+                    singleItemOrder.add(item);
+
+                    Order order = new Order(
+                            orderId,
+                            customerName,
+                            "Pending",
+                            item.getPrice(),
+                            singleItemOrder
+                    );
+
+                    orderRepo.addOrder(order);
                     restaurant.addOrder(order);
+
                     System.out.println("Order placed!");
                     break;
 
                 case 6:
-                    System.out.println("ORDERS:");
-                    restaurant.getOrders().forEach(System.out::println);
+                    restaurant.printOrders();
                     break;
 
-                case 7:
-                    System.out.println("Exiting system. Goodbye!");
-                    scanner.close();
-                    return;
-
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("Invalid option! Try again.");
+                    break;
             }
         }
     }
