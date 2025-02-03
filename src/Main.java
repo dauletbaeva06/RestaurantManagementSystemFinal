@@ -62,37 +62,32 @@ public class Main {
 
                     System.out.print("Enter item name to order: ");
                     String orderItemName = scanner.nextLine().trim();  // Убираем пробелы
-
-                    // Поиск элемента по имени
                     MenuItem orderedItem = menuRepo.searchMenuItem(orderItemName);
                     if (orderedItem == null) {
                         System.out.println("Item not found!");
                         break;
                     }
 
-                    int orderId = (int) (System.currentTimeMillis() / 1000); // Генерация уникального ID для заказа
+                    int orderId = (int) (System.currentTimeMillis() / 1000);
                     List<MenuItem> singleItemOrder = new ArrayList<>();
                     singleItemOrder.add(orderedItem);
 
-                    double totalPrice = orderedItem.getPrice(); // Подсчитываем общую стоимость
+                    double totalPrice = orderedItem.getPrice();
 
-                    // Создание нового заказа
                     Order newOrder = new Order(orderId, customer, "Pending", totalPrice, singleItemOrder);
-                    orderRepo.addOrder(newOrder); // Добавляем заказ в базу данных
-                    restaurant.addOrder(newOrder); // Добавляем заказ в ресторан
+                    orderRepo.addOrder(newOrder);
+                    restaurant.addOrder(newOrder);
 
                     System.out.println("Order placed successfully!");
                     break;
 
                 case 4:
-                    // Выход из программы
                     System.exit(0);
                     break;
 
                 case 5:
-                    // Оформление заказа для конкретного элемента
                     System.out.print("Enter item name to order: ");
-                    String orderSpecificItemName = scanner.nextLine().trim();  // Убираем пробелы
+                    String orderSpecificItemName = scanner.nextLine().trim();
 
                     MenuItem specificItem = menuRepo.searchMenuItem(orderSpecificItemName);
                     if (specificItem == null) {
@@ -118,19 +113,17 @@ public class Main {
                             specificItemOrder
                     );
 
-                    orderRepo.addOrder(specificOrder); // Добавление заказа в базу данных
-                    restaurant.addOrder(specificOrder); // Добавление заказа в список ресторана
+                    orderRepo.addOrder(specificOrder);
+                    restaurant.addOrder(specificOrder);
 
                     System.out.println("Order placed for specific item!");
                     break;
 
                 case 6:
-                    // Просмотр всех заказов
                     restaurant.printOrders();
                     break;
 
                 default:
-                    // Неверный ввод
                     System.out.println("Invalid option! Try again.");
                     break;
             }
