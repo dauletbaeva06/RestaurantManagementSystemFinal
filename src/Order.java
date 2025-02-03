@@ -15,15 +15,21 @@ public class Order {
         this.items = items;
     }
 
-    public int getId() { return id; }
-    public String getCustomerName() { return customerName; }
-    public String getStatus() { return status; }
-    public double getTotalPrice() { return totalPrice; }
-    public List<MenuItem> getItems() { return items; }
+    // Геттеры и, при необходимости, сеттеры
+    public String getCustomerName() {
+        return customerName;
+    }
 
-    @Override
-    public String toString() {
-        return String.format("Order{id=%d, customer='%s', status='%s', totalPrice=%.2f, items=%s}",
-                id, customerName, status, totalPrice, items);
+    public String getStatus() {
+        return status;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public List<MenuItem> getItems() {
+        return items;
     }
 }
+

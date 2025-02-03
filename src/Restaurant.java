@@ -3,38 +3,27 @@ import java.util.List;
 
 public class Restaurant {
     private List<MenuItem> menuItems;
-    private List<Order> orders; // Список заказов
+    private List<Order> orders;
 
     public Restaurant() {
         this.menuItems = new ArrayList<>();
         this.orders = new ArrayList<>();
     }
 
-    public void addOrder(Order order) {
-        orders.add(order);
-        System.out.println("Order added to restaurant orders.");
-    }
-
-    // Метод поиска блюда в меню по названию
-    public MenuItem searchMenuItem(String name) {
+    public MenuItem searchMenuItem(String itemName) {
         for (MenuItem item : menuItems) {
-            if (item.getName().equalsIgnoreCase(name)) {
+            if (item.getName().equalsIgnoreCase(itemName)) {
                 return item;
             }
         }
-        return null; // Если не найдено
+        return null;
     }
 
-    public void addMenuItem(MenuItem item) {
-        menuItems.add(item);
+    public void addOrder(Order order) {
+        orders.add(order);
     }
 
     public void printOrders() {
-        if (orders.isEmpty()) {
-            System.out.println("No orders yet.");
-            return;
-        }
-        System.out.println("Current Orders:");
         for (Order order : orders) {
             System.out.println(order);
         }
