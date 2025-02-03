@@ -1,18 +1,15 @@
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    private static Restaurant restaurant = new Restaurant(); // Инициализация объекта ресторана
+    private static Restaurant restaurant = new Restaurant();
 
     public static void main(String[] args) {
-        // Подключение к базе данных
-        Connection connection = Database.connect(); // Подключение к базе данных через вспомогательный класс
-        MenuItemRepository menuRepo = new MenuItemRepository(connection); // Репозиторий для работы с меню
-        OrderRepository orderRepo = new OrderRepository(connection); // Репозиторий для работы с заказами
+        Connection connection = Database.connect();
+        MenuItemRepository menuRepo = new MenuItemRepository(connection);
+        OrderRepository orderRepo = new OrderRepository(connection);
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -23,7 +20,6 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    // Просмотр всех элементов меню
                     List<MenuItem> menu = menuRepo.getAllMenuItems();
                     if (menu.isEmpty()) {
                         System.out.println("Menu is empty!");
@@ -33,7 +29,6 @@ public class Main {
                     break;
 
                 case 2:
-                    // Добавление нового элемента в меню
                     System.out.print("Enter item name: ");
                     String name = scanner.nextLine();
                     System.out.print("Enter price: ");
@@ -47,7 +42,6 @@ public class Main {
                     break;
 
                 case 3:
-                    // Оформление заказа с выбором всех элементов меню
                     System.out.print("Enter customer name: ");
                     String customer = scanner.nextLine();
 

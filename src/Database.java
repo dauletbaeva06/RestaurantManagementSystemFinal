@@ -17,7 +17,6 @@ public class Database {
         }
     }
 
-    // Метод для безопасного закрытия соединения
     public static void close(Connection connection) {
         if (connection != null) {
             try {

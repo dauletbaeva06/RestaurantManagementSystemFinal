@@ -15,7 +15,6 @@ public class Order {
         this.items = items;
     }
 
-    // Геттеры и, при необходимости, сеттеры
     public String getCustomerName() {
         return customerName;
     }

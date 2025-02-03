@@ -5,12 +5,10 @@ import java.util.List;
 public class MenuItemRepository {
     private Connection connection;
 
-    // Конструктор для инициализации соединения
     public MenuItemRepository(Connection connection) {
         this.connection = connection;
     }
 
-    // Метод для получения всех элементов меню
     public List<MenuItem> getAllMenuItems() {
         List<MenuItem> menuItems = new ArrayList<>();
         String sql = "SELECT * FROM menu_items";
@@ -34,7 +32,6 @@ public class MenuItemRepository {
         return menuItems;
     }
 
-    // Метод для добавления нового элемента в меню
     public void addMenuItem(MenuItem menuItem) {
         String sql = "INSERT INTO menu_items (name, price, category) VALUES (?, ?, ?)";
 
@@ -49,7 +46,6 @@ public class MenuItemRepository {
         }
     }
 
-    // Метод для поиска элемента по имени
     public MenuItem searchMenuItem(String itemName) {
         String sql = "SELECT * FROM menu_items WHERE name = ?";
         MenuItem menuItem = null;

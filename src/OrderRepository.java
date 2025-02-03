@@ -12,7 +12,6 @@ public class OrderRepository {
     }
 
     public void addOrder(Order order) {
-        // Формируем строку с именами блюд через запятую
         String itemsString = "";
         List<MenuItem> items = order.getItems();
         if (items != null && !items.isEmpty()) {
@@ -21,7 +20,6 @@ public class OrderRepository {
                     .collect(Collectors.joining(", "));
         }
 
-        // SQL-запрос для вставки заказа, включая список блюд
         String sql = "INSERT INTO orders (customer_name, status, total_price, items) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
